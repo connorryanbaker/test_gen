@@ -29,9 +29,10 @@ end
 random_5_idxs = (0...42).to_a.shuffle.take(5)
 problems_directory = Dir.new(Dir.pwd + "/problems")
 problems = problems_directory.select {|f| !File.directory?(f)}.sort
-
+my_problems = []
 problems.each.with_index do |file, idx|
     if random_5_idxs.include?(idx)
+      my_problems << file
         File.open(Dir.pwd + "/problems/" + file, 'rb') do |input|
             File.open(Dir.pwd + dir_name + "/lib/test.rb", "a") do |output|
                 IO.copy_stream(input, output)
@@ -41,11 +42,13 @@ problems.each.with_index do |file, idx|
     end 
 end 
 
+my_problems.map! {|str| str.gsub(/\.rb/, "")}
+
 specs_directory = Dir.new(Dir.pwd + "/specs")
 specs = specs_directory.select {|f| !File.directory?(f)}.sort 
 
 specs.each.with_index do |file, idx|
-    if random_5_idxs.include?(idx)
+    if my_problems.any? {|str| file.start_with?(str)}
         File.open(Dir.pwd + "/specs/" + file, 'rb') do |input|
             File.open(Dir.pwd + dir_name +"/spec/test_spec.rb", "a") do |output|
                 IO.copy_stream(input, output)
