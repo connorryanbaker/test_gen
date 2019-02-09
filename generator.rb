@@ -26,7 +26,7 @@ end
 
 #now, we generate range of numbers 0 ... problems.length, convert it to an array and shuffle it
 #to pick 5 random problems
-random_5_idxs = (0...43).to_a.shuffle.take(5)
+random_5_idxs = (0...42).to_a.shuffle.take(5)
 problems_directory = Dir.new(Dir.pwd + "/problems")
 problems = problems_directory.select {|f| !File.directory?(f)}.sort
 
