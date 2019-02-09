@@ -2,7 +2,7 @@ dir_name = "/practice_test"
 iteration = 2
 # make sure we're not writing to a directory that already exists
 until !File.directory?(Dir.pwd + dir_name)
-    dir_name = dir_name.split("_")[0] + "_#{iteration.to_s}"
+    dir_name = dir_name.split("-")[0] + "-#{iteration.to_s}"
     iteration += 1
 end
 
