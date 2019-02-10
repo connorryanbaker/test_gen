@@ -6,6 +6,10 @@ until !File.directory?(Dir.pwd + dir_name)
     iteration += 1
 end
 
+# process command line arg if any
+
+how_many = ARGV.any? ? ARGV[0].to_i : 5
+return if !how_many.between?(1,42)
 
 #create lib/spec directories and Gemfile
 Dir.mkdir(Dir.pwd + dir_name)
@@ -25,8 +29,9 @@ File.open(Dir.pwd + dir_name + "/Gemfile", "w") do |f|
 end 
 
 #now, we generate range of numbers 0 ... problems.length, convert it to an array and shuffle it
-#to pick 5 random problems
-random_5_idxs = (0...42).to_a.shuffle.take(5)
+#to pick random problems. how_many stores argv / default of 5 problems
+#
+random_5_idxs = (0...42).to_a.shuffle.take(how_many)
 problems_directory = Dir.new(Dir.pwd + "/problems")
 problems = problems_directory.select {|f| !File.directory?(f)}.sort
 my_problems = []
